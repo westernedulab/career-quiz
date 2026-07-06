@@ -546,7 +546,7 @@ const QUESTIONS = [
 ["Em cảm thấy không thoải mái khi phải làm điều gì đó khác với cách mọi người vẫn làm.","A",true],
 ["Em bị thu hút bởi những ý tưởng, hình ảnh hoặc thiết kế mới lạ, khác biệt.","A",false],
 ["Khi làm việc nhóm, em để ý xem mọi người có đang cảm thấy thoải mái hay không.","S",false],
-["Khi cần đưa ra quyết định quan trọng, em sẵn sàng chọn lựa chọn hợp lý nhất dù điều đó có khiến một số người trong nhóm không thoải mái.","S",true],
+["Nếu tin rằng một hướng đi là đúng, em vẫn theo đuổi dù có người phản đối.","S",true],
 ["Em thích những hoạt động có sự tương tác, trò chuyện với nhiều người hơn là làm việc một mình.","S",false],
 ["Khi nhìn thấy một cơ hội thú vị, em muốn chủ động nắm lấy thay vì chờ người khác dẫn dắt.","E",false],
 ["Em ngại đứng ra dẫn dắt hoặc đại diện cho nhóm trước nhiều người.","E",true],
@@ -784,10 +784,10 @@ function toast(msg){
 function sendToSheet(payload){
   if(!SHEET_API_URL) return;
   try{
-    fetch(SHEET_API_URL,{
-      method:"POST", mode:"no-cors",
-      headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body:JSON.stringify(payload)
+    // Dùng GET + URLSearchParams để tránh CORS block khi chạy từ GitHub Pages
+    const params = new URLSearchParams({data: JSON.stringify(payload)});
+    fetch(SHEET_API_URL + "?" + params.toString(), {
+      method:"GET", mode:"no-cors"
     }).catch(()=>{});
   }catch(e){}
 }
