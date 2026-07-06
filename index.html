@@ -122,6 +122,12 @@ body{
 .btn.ghost:hover{background:var(--bg)}
 .privacy{font-size:.75rem;color:var(--muted);text-align:center;margin-top:12px}
 .toggle-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip-select{display:flex;gap:8px;flex-wrap:wrap}
+.chip-select .chip-opt{font:inherit;font-size:.85rem;font-weight:600;color:var(--muted);background:#FBFDFF;border:1.5px solid var(--line);border-radius:999px;padding:8px 15px;cursor:pointer;transition:all .18s}
+.chip-select .chip-opt:hover{border-color:var(--blue-soft)}
+.chip-select .chip-opt.on{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 4px 10px rgba(1,43,104,.2)}
+.chip-select .chip-opt:focus-visible{outline:3px solid rgba(30,86,168,.4);outline-offset:2px}
+.field.invalid .chip-select{border-radius:12px;box-shadow:0 0 0 2px rgba(192,57,43,.35);padding:4px}
 .toggle-opt{font:inherit;font-weight:700;font-size:.92rem;color:var(--muted);background:#FBFDFF;border:1.5px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;transition:all .18s}
 .toggle-opt:hover{border-color:var(--blue-soft)}
 .toggle-opt.on{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 5px 12px rgba(1,43,104,.2)}
@@ -371,6 +377,19 @@ body{
         </select>
         <span class="err">Vui lòng chọn lớp.</span>
       </div>
+      <div class="field" id="f-country">
+        <label>Quốc gia du học em quan tâm <span class="req">*</span> <span style="color:var(--muted);font-weight:500">(chọn 1 hoặc nhiều)</span></label>
+        <div class="chip-select" id="countries" role="group" aria-label="Quốc gia quan tâm">
+          <button type="button" class="chip-opt" data-c="Mỹ">🇺🇸 Mỹ</button>
+          <button type="button" class="chip-opt" data-c="Úc">🇦🇺 Úc</button>
+          <button type="button" class="chip-opt" data-c="Canada">🇨🇦 Canada</button>
+          <button type="button" class="chip-opt" data-c="Anh">🇬🇧 Anh</button>
+          <button type="button" class="chip-opt" data-c="New Zealand">🇳🇿 New Zealand</button>
+          <button type="button" class="chip-opt" data-c="Châu Âu">🇪🇺 Châu Âu</button>
+          <button type="button" class="chip-opt" data-c="Chưa rõ">Chưa rõ</button>
+        </div>
+        <span class="err">Vui lòng chọn ít nhất một lựa chọn.</span>
+      </div>
       <button class="btn" id="btn-to-parent">Tiếp tục →</button>
       <p class="privacy">🔒 Thông tin của em chỉ dùng để gửi kết quả và tư vấn hướng nghiệp, không chia sẻ cho bên thứ ba.</p>
     </div>
@@ -474,7 +493,7 @@ body{
       <div class="cta-eyebrow">Bước tiếp theo</div>
       <h3 id="cta-title">Biến bản đồ này thành lộ trình du học của riêng em</h3>
       <p id="cta-text">Kết quả trên cho em biết <b>mình là ai</b>. Buổi tư vấn 1-1 miễn phí sẽ cho em biết <b>đi đâu và đi bằng cách nào</b>: chọn ngành, chọn trường, học bổng và lộ trình hồ sơ phù hợp với chính thiên hướng của em — trước khi bạn bè kịp bắt đầu.</p>
-      <a class="btn" id="cta-btn" href="#" target="_blank" rel="noopener">🎓 Đặt lịch tư vấn miễn phí</a>
+      <a class="btn" id="cta-btn" href="#">🎓 Đặt lịch tư vấn miễn phí</a>
       <div class="cta-perks">
         <span class="cta-perk"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M13 4L6 12 3 9" stroke="#7FE3B0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Cá nhân hoá theo kết quả</span>
         <span class="cta-perk"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M13 4L6 12 3 9" stroke="#7FE3B0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Chuyên viên giàu kinh nghiệm</span>
@@ -511,7 +530,7 @@ const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbx9bRJZYlWUIwuvyP
    Dán link booking/landing page của bạn vào đây.
    VD: "https://westernedu.vn/dat-lich" hoặc link Calendly/Google Form.
 ===================================================== */
-const CONSULT_URL = "https://westernedulab.github.io/future-navigator/dat-lich.html";
+const CONSULT_URL = "dat-lich.html";
 
 /* ---------- DỮ LIỆU CÂU HỎI (58 câu) ----------
    [nội dung, nhóm RIASEC, đảo chiều?]  — nhóm "D" = câu kiểm tra độ tin cậy */
@@ -546,7 +565,7 @@ const QUESTIONS = [
 ["Em cảm thấy không thoải mái khi phải làm điều gì đó khác với cách mọi người vẫn làm.","A",true],
 ["Em bị thu hút bởi những ý tưởng, hình ảnh hoặc thiết kế mới lạ, khác biệt.","A",false],
 ["Khi làm việc nhóm, em để ý xem mọi người có đang cảm thấy thoải mái hay không.","S",false],
-["Nếu tin rằng một hướng đi là đúng, em vẫn có thể theo đuổi dù có người phản đối.","S",true],
+["Khi cần đưa ra quyết định quan trọng, em ưu tiên điều gì hợp lý nhất hơn là điều khiến mọi người đều thấy thoải mái.","S",true],
 ["Em thích những hoạt động có sự tương tác, trò chuyện với nhiều người hơn là làm việc một mình.","S",false],
 ["Khi nhìn thấy một cơ hội thú vị, em muốn chủ động nắm lấy thay vì chờ người khác dẫn dắt.","E",false],
 ["Em ngại đứng ra dẫn dắt hoặc đại diện cho nhóm trước nhiều người.","E",true],
@@ -574,10 +593,10 @@ const QUESTIONS = [
 ["Em không màng nếu phải thực hiện những tác vụ, công việc lặp đi lặp lại.","C",false],
 ["Công việc cần phải ứng biến, thay đổi, điều chỉnh nhanh là những việc em muốn tránh.","C",false],
 /* PHẦN D — Kiểm tra độ tin cậy (55–58) */
-["Em chưa từng mắc sai lầm nào trong học tập hoặc công việc.","D",false],
-["Mọi người hầu như luôn đồng ý với ý kiến của em.","D",false],
-["Em luôn giữ bình tĩnh trong mọi tình huống.","D",false],
-["Em chưa bao giờ trì hoãn bất kỳ việc gì quan trọng.","D",false]
+["Tôi chưa từng mắc sai lầm nào trong học tập hoặc công việc.","D",false],
+["Mọi người hầu như luôn đồng ý với ý kiến của tôi.","D",false],
+["Tôi luôn giữ bình tĩnh trong mọi tình huống.","D",false],
+["Tôi chưa bao giờ trì hoãn bất kỳ việc gì quan trọng.","D",false]
 ];
 
 const PARTS = [
@@ -757,7 +776,8 @@ CES:{order:"S – E – C",en:"People Development Leader",vi:"Nhà phát triển
 const $ = s => document.querySelector(s);
 const answers = new Array(QUESTIONS.length).fill(0);
 let idx = 0, lastSeenPart = "";
-const student = {name:"",phone:"",email:"",grade:""};
+const student = {name:"",phone:"",email:"",grade:"",country:""};
+const selectedCountries = new Set();
 const parent = {name:"",phone:"",email:"",wantReport:"yes"};
 let isReplay = false;   // true khi mở bằng link báo cáo
 
@@ -820,7 +840,9 @@ function validateStudent(){
   mark("#f-phone", !/^[0-9+\s.()-]{8,15}$/.test(phone));
   mark("#f-email", email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
   mark("#f-grade", !grade);
-  if(ok){ student.name=name; student.phone=phone; student.email=email; student.grade=grade; }
+  mark("#f-country", selectedCountries.size === 0);
+  if(ok){ student.name=name; student.phone=phone; student.email=email; student.grade=grade;
+          student.country=[...selectedCountries].join(", "); }
   return ok;
 }
 function validateParent(){
@@ -841,6 +863,14 @@ $("#btn-to-parent").addEventListener("click",()=>{
   if(!validateStudent()) return;
   showScreen("#screen-parent");
 });
+// chọn quốc gia (nhiều)
+$("#countries").addEventListener("click", e=>{
+  const b = e.target.closest(".chip-opt"); if(!b) return;
+  const c = b.dataset.c;
+  if(selectedCountries.has(c)){ selectedCountries.delete(c); b.classList.remove("on"); }
+  else { selectedCountries.add(c); b.classList.add("on"); }
+  if(selectedCountries.size) $("#f-country").classList.remove("invalid");
+});
 // quay lại học sinh
 $("#btn-back-student").addEventListener("click",()=> showScreen("#screen-intro"));
 // nút gạt nhận báo cáo
@@ -856,6 +886,7 @@ $("#btn-start").addEventListener("click",()=>{
   sendToSheet({type:"start", timestamp:new Date().toLocaleString("vi-VN"),
     status:"Bắt đầu làm bài",
     name:student.name, phone:student.phone, email:student.email, grade:student.grade,
+    country:student.country,
     parentName:parent.name, parentPhone:parent.phone, parentEmail:parent.email,
     wantReport: parent.wantReport==="yes" ? "Có" : "Không"});
   idx = 0; lastSeenPart = "";
@@ -1096,10 +1127,15 @@ function finishQuiz(){
   $("#v-badge").innerHTML = '<span class="vbadge '+r.validation.status+'">'+r.validation.text+'</span>';
   $("#v-note").textContent = r.validation.note;
 
-  // nút CTA
+  // nút CTA — chuyển kèm thông tin học sinh + kết quả sang trang đặt lịch
   const ctaBtn = $("#cta-btn");
-  if(CONSULT_URL){ ctaBtn.href = CONSULT_URL; }
-  else { ctaBtn.removeAttribute("target"); ctaBtn.href = "#"; }
+  if(CONSULT_URL){
+    const cp = new URLSearchParams({
+      name: student.name, phone: student.phone, email: student.email, grade: student.grade,
+      country: student.country, archetype: a.en+" — "+a.vi, holland: r.holland.join("")
+    });
+    ctaBtn.href = CONSULT_URL + (CONSULT_URL.indexOf("?")>=0 ? "&" : "?") + cp.toString();
+  } else { ctaBtn.removeAttribute("target"); ctaBtn.href = "#"; }
 
   showScreen("#screen-result");
 
@@ -1113,6 +1149,7 @@ function finishQuiz(){
   sendToSheet({type:"complete", timestamp:new Date().toLocaleString("vi-VN"),
     status:"Hoàn thành",
     name:student.name, phone:student.phone, email:student.email, grade:student.grade,
+    country:student.country,
     parentName:parent.name, parentPhone:parent.phone, parentEmail:parent.email,
     wantReport: parent.wantReport==="yes" ? "Có" : "Không",
     hollandCode:r.holland.join(""), archetype:a.en+" — "+a.vi,
