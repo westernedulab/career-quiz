@@ -244,6 +244,58 @@ body{
 .arch-block:last-child{padding-bottom:0}
 .arch-block .ab-title{font-size:.8rem;font-weight:800;color:var(--navy);margin-bottom:4px}
 .arch-block p{font-size:.92rem;color:var(--ink)}
+
+/* Điểm mạnh / Điều nên lưu ý — 2 cột */
+.sn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  border-top:1px solid var(--line);padding-top:14px;margin-top:14px}
+@media(max-width:600px){.sn-grid{grid-template-columns:1fr}}
+.sn-col{border-radius:14px;padding:16px 18px}
+.sn-col.good{background:#EAF7F1}
+.sn-col.warn{background:#FDF6E6}
+.sn-title{font-size:.78rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.05em;margin-bottom:12px}
+.sn-col.good .sn-title{color:#0F6E56}
+.sn-col.warn .sn-title{color:#8A6410}
+.sn-item{display:flex;gap:9px;margin-bottom:12px}
+.sn-item:last-child{margin-bottom:0}
+.sn-mk{flex-shrink:0;font-weight:800;line-height:1.4}
+.sn-col.good .sn-mk{color:#1D9E75}
+.sn-col.warn .sn-mk{color:#B8860B}
+.sn-t{font-size:.9rem;font-weight:700;color:var(--ink);line-height:1.35}
+.sn-d{font-size:.84rem;color:#3A4B66;line-height:1.55;margin-top:2px}
+
+/* Ngành nghề: mặc định 6, còn lại ẩn sau nút Xem thêm */
+.tags .tag.extra{display:none}
+.tags .tag.extra.show{display:inline-block}
+.seemore{width:100%;margin-top:12px;background:transparent;border:1px solid var(--line);
+  border-radius:12px;padding:10px;font-family:inherit;font-weight:700;font-size:.84rem;
+  color:var(--royal);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.seemore:hover{background:#F4F8FE}
+.seemore svg{transition:transform .2s}
+.seemore.open svg{transform:rotate(180deg)}
+
+/* Sticky CTA — chỉ hiện ở màn hình kết quả */
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(1,43,104,.12)}
+.sticky-cta.on{display:block}
+.sticky-in{max-width:860px;margin:0 auto;padding:11px 16px;
+  display:flex;align-items:center;gap:14px}
+.sticky-txt{font-size:.9rem;color:var(--navy);line-height:1.3}
+.sticky-txt b{font-weight:700;display:block}
+.sticky-txt span{display:block;font-size:.78rem;color:var(--muted);font-weight:400;margin-top:1px}
+.sticky-btn{margin-left:auto;flex-shrink:0;background:var(--navy);color:#fff;
+  border-radius:12px;padding:12px 20px;font-size:.88rem;font-weight:700;
+  text-decoration:none;white-space:nowrap;transition:transform .12s,box-shadow .12s;
+  box-shadow:0 6px 16px rgba(1,43,104,.28)}
+.sticky-btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(1,43,104,.34)}
+#screen-result.active{padding-bottom:88px}
+@media(max-width:640px){
+  .sticky-txt span{display:none}
+  .sticky-txt b{font-size:.84rem}
+  .sticky-btn{padding:11px 14px;font-size:.8rem;white-space:normal;text-align:center}
+}
+@media print{.sticky-cta{display:none!important}}
 .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
 .tag{font-size:.8rem;font-weight:600;color:var(--navy);background:var(--blue-faint);border-radius:8px;padding:5px 11px}
 .tag.alt{background:var(--bg);border:1px solid var(--line);color:var(--royal)}
@@ -529,6 +581,13 @@ body{
   </section>
 
 </div>
+<div class="sticky-cta" id="sticky-cta">
+  <div class="sticky-in">
+    <div class="sticky-txt"><b>Sẵn sàng cho bước tiếp theo?</b><span>Đặt lịch tư vấn 1-1 miễn phí với chuyên viên Western Edu</span></div>
+    <a class="sticky-btn" id="sticky-btn" href="#">Tìm ngành học &amp; trường phù hợp với tôi →</a>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <script>
 /* =====================================================
@@ -578,7 +637,7 @@ const QUESTIONS = [
 ["Em cảm thấy không thoải mái khi phải làm điều gì đó khác với cách mọi người vẫn làm.","A",true],
 ["Em bị thu hút bởi những ý tưởng, hình ảnh hoặc thiết kế mới lạ, khác biệt.","A",false],
 ["Khi làm việc nhóm, em để ý xem mọi người có đang cảm thấy thoải mái hay không.","S",false],
-["Nếu tin rằng một hướng đi là đúng, tôi vẫn có thể theo đuổi dù có người phản đối.","S",true],
+["Khi cần đưa ra quyết định quan trọng, em ưu tiên điều gì hợp lý nhất hơn là điều khiến mọi người đều thấy thoải mái.","S",true],
 ["Em thích những hoạt động có sự tương tác, trò chuyện với nhiều người hơn là làm việc một mình.","S",false],
 ["Khi nhìn thấy một cơ hội thú vị, em muốn chủ động nắm lấy thay vì chờ người khác dẫn dắt.","E",false],
 ["Em ngại đứng ra dẫn dắt hoặc đại diện cho nhóm trước nhiều người.","E",true],
@@ -606,10 +665,10 @@ const QUESTIONS = [
 ["Em không màng nếu phải thực hiện những tác vụ, công việc lặp đi lặp lại.","C",false],
 ["Công việc cần phải ứng biến, thay đổi, điều chỉnh nhanh là những việc em muốn tránh.","C",false],
 /* PHẦN D — Kiểm tra độ tin cậy (55–58) */
-["Em chưa từng mắc sai lầm nào trong học tập hoặc công việc.","D",false],
+["Tôi chưa từng mắc sai lầm nào trong học tập hoặc công việc.","D",false],
 ["Mọi người hầu như luôn đồng ý với ý kiến của tôi.","D",false],
-["Em luôn giữ bình tĩnh trong mọi tình huống.","D",false],
-["Em chưa bao giờ trì hoãn bất kỳ việc gì quan trọng.","D",false]
+["Tôi luôn giữ bình tĩnh trong mọi tình huống.","D",false],
+["Tôi chưa bao giờ trì hoãn bất kỳ việc gì quan trọng.","D",false]
 ];
 
 const PARTS = [
@@ -643,142 +702,142 @@ const GROUP_ORDER = ["R","I","A","S","E","C"];
 const ARCHETYPES = {
 AIR:{order:"R – I – A",en:"Technical Creator",vi:"Nhà sáng tạo kỹ thuật",
  kw:["Thực tế","Sáng tạo","Thích khám phá","Tư duy hệ thống"],
- desc:"Kết hợp giữa thực hành, phân tích và sáng tạo, bạn vừa thích tự tay làm ra sản phẩm, vừa muốn hiểu sâu cơ chế vận hành đằng sau nó, vừa không hài lòng nếu sản phẩm thiếu dấu ấn riêng. Bạn thường là người \"vừa nghĩ vừa làm\", thử nghiệm liên tục cho đến khi tìm ra giải pháp vừa hiệu quả vừa độc đáo.",
- strong:"Giỏi biến ý tưởng trừu tượng thành sản phẩm cụ thể, tự học kỹ thuật mới rất nhanh nhờ kết hợp tư duy phân tích và thực hành tay chân. Thường giải quyết vấn đề kỹ thuật theo cách sáng tạo, không bị bó buộc trong khuôn mẫu có sẵn.",
- note:"Vì vừa muốn chính xác vừa muốn độc đáo, bạn đôi khi mất nhiều thời gian hoàn thiện một sản phẩm vì luôn cảm thấy \"có thể làm tốt hơn\". Cũng có xu hướng làm việc độc lập, dễ bỏ lỡ phản hồi hữu ích từ người khác.",
+ desc:"Kết hợp giữa thực hành, phân tích và sáng tạo, em vừa thích tự tay làm ra sản phẩm, vừa muốn hiểu sâu cơ chế vận hành đằng sau nó, vừa không hài lòng nếu sản phẩm thiếu dấu ấn riêng. Em thường là người \"vừa nghĩ vừa làm\", thử nghiệm liên tục cho đến khi tìm ra giải pháp vừa hiệu quả vừa độc đáo.",
+ strong:[{t:"Biến ý tưởng thành sản phẩm",d:"Em giỏi trong việc chuyển những ý tưởng trừu tượng thành sản phẩm thực tế."},{t:"Tự học kỹ thuật rất nhanh",d:"Em kết hợp tư duy phân tích với thực hành tay chân nên tiếp thu công nghệ mới nhanh hơn nhiều người."},{t:"Giải quyết vấn đề sáng tạo",d:"Em không bị bó buộc trong khuôn mẫu có sẵn, thường tìm ra lối đi kỹ thuật riêng."}],
+ note:[{t:"Khá cầu toàn",d:"Em dễ mất nhiều thời gian hoàn thiện sản phẩm vì luôn cảm thấy \"có thể làm tốt hơn\"."},{t:"Dễ bỏ lỡ phản hồi hữu ích",d:"Em có xu hướng làm việc độc lập nên dễ bỏ lỡ những góp ý hữu ích từ người khác."}],
  careers:["Thiết kế sản phẩm","Kỹ sư cơ điện tử","Thiết kế công nghiệp","Phát triển prototype","Thiết kế UX/UI","Kỹ thuật ô tô","Kỹ thuật hàng hải","Kỹ thuật hàng không","Thiết kế game","Thiết kế thiết bị thông minh","Kỹ sư R&D","Kiến trúc sư","Thiết kế thời trang"],
  fields:["Phòng nghiên cứu kỹ thuật","Game studio","Phòng nghiên cứu & phát triển sản phẩm"]},
 IRS:{order:"R – I – S",en:"Applied Problem Solver",vi:"Người giải quyết vấn đề thực tiễn",
  kw:["Logic","Hỗ trợ người khác","Thực hành","Phân tích"],
- desc:"Bạn dùng tư duy phân tích và kỹ năng thực hành để giải quyết những vấn đề ảnh hưởng trực tiếp đến con người. Bạn không chỉ muốn hiểu \"tại sao\", mà còn muốn tự tay tạo ra giải pháp giúp ích cho người khác.",
- strong:"Chuyển hoá kiến thức kỹ thuật phức tạp thành giải pháp dễ hiểu, dễ áp dụng. Kiên nhẫn, đáng tin cậy, thường được giao những nhiệm vụ cần cả độ chính xác kỹ thuật lẫn sự tận tâm.",
- note:"Thiên hướng làm việc độc lập đôi khi giằng co với mong muốn kết nối con người, khiến bạn khó cân bằng giữa thời gian hoàn thiện kỹ thuật và thời gian chăm sóc, lắng nghe người được giúp đỡ.",
+ desc:"Em dùng tư duy phân tích và kỹ năng thực hành để giải quyết những vấn đề ảnh hưởng trực tiếp đến con người. Em không chỉ muốn hiểu \"tại sao\", mà còn muốn tự tay tạo ra giải pháp giúp ích cho người khác.",
+ strong:[{t:"Năng lực diễn đạt tốt",d:"Em chuyển kiến thức kỹ thuật rắc rối thành giải pháp dễ hiểu, dễ áp dụng cho người cần."},{t:"Kiên nhẫn và đáng tin cậy",d:"Em thường được giao việc cần cả độ chính xác kỹ thuật lẫn sự tận tâm với con người."},{t:"Hướng tới thực tiễn",d:"Em không dừng ở việc hiểu \"tại sao\", mà tự tay tạo ra giải pháp giúp ích cho người khác."}],
+ note:[{t:"Vấn đề kỹ thuật và con người",d:"Em khó cân bằng giữa thời gian hoàn thiện kỹ thuật và thời gian lắng nghe, chăm sóc người mình giúp đỡ."},{t:"Dễ “ôm” việc",d:"Em thiên về làm độc lập nên đôi khi bỏ lỡ cơ hội phối hợp hoặc nhờ hỗ trợ khi cần."}],
  careers:["Y tá","Điều dưỡng","Bác sỹ chuyên khoa dinh dưỡng","Bác sỹ thú y","Bác sỹ chuyên khoa","Luật sư","Bác sỹ/nhân viên cấp cứu (A&E Doctor/Medic)","Kỹ thuật y sinh","Chuyên viên phục hồi chức năng","Kỹ thuật viên phòng lab","Giáo viên STEM","Chuyên viên môi trường","Chuyên viên hỗ trợ kỹ thuật"],
  fields:["Y tế - sức khỏe","Phòng tư vấn kỹ thuật","Giáo dục"]},
 EIR:{order:"R – I – E",en:"Innovation Builder",vi:"Nhà kiến tạo đổi mới",
  kw:["Chiến lược","Quyết đoán","Thích cải tiến"],
- desc:"Bạn kết hợp khả năng thực hành, tư duy phân tích sắc bén và bản năng kinh doanh để biến nghiên cứu hoặc phát minh kỹ thuật thành sản phẩm/dịch vụ có giá trị thương mại thực sự.",
- strong:"Bạn nhìn ra tiềm năng kinh doanh trong những ý tưởng kỹ thuật mà người khác có thể bỏ qua. Vừa hiểu sâu vấn đề kỹ thuật, vừa biết thuyết phục nhà đầu tư hoặc khách hàng tin vào giá trị thực tế của giải pháp.",
- note:"Vì luôn hướng tới kết quả và tốc độ, bạn đôi khi vội vàng đưa sản phẩm ra thị trường trước khi hoàn thiện đầy đủ về kỹ thuật.",
+ desc:"Em kết hợp khả năng thực hành, tư duy phân tích sắc bén và bản năng kinh doanh để biến nghiên cứu hoặc phát minh kỹ thuật thành sản phẩm/dịch vụ có giá trị thương mại thực sự.",
+ strong:[{t:"“Con mắt” kinh doanh nhạy bén",d:"Em thấy được giá trị thương mại trong những ý tưởng kỹ thuật mà người khác bỏ qua."},{t:"Thuyết phục nhờ vào thực tiễn",d:"Em vừa hiểu sâu vấn đề kỹ thuật, vừa biết cách khiến nhà đầu tư hoặc khách hàng tin vào giải pháp."},{t:"Luôn tìm cách cải tiến",d:"Em không hài lòng với giải pháp hiện có, liên tục tìm cách làm nó tốt hơn và khả thi hơn."}],
+ note:[{t:"Dễ áp lực bởi việc dẫn đầu",d:"Em hướng tới kết quả và tốc độ nên đôi khi ra mắt trước khi phần kỹ thuật thật sự hoàn thiện."},{t:"Quyết đoán đến vội vàng",d:"Em ra quyết định rất nhanh, đôi khi trước khi cân nhắc kỹ rủi ro dài hạn."}],
  careers:["Nghiên cứu & phát triển (R&D)","Phát triển sản phẩm công nghệ","Vận hành nhà máy, dây chuyền sản xuất","Tư vấn đổi mới công nghệ","Phát triển kinh doanh","Phân tích kinh doanh (Business Analyst)","Vận hành chuỗi cung ứng công nghệ cao","Quản lý xây dựng","Kỹ sư công nghệ bán dẫn","Kỹ sư vật liệu","Kỹ sư năng lượng tái tạo","Phát triển bền vững"],
  fields:["Startup công nghệ","Doanh nghiệp đổi mới sản xuất","Doanh nghiệp sản xuất chip, thiết bị điện tử"]},
 CIR:{order:"R – I – C",en:"Systems Specialist",vi:"Chuyên gia hệ thống",
  kw:["Kỷ luật","Chính xác","Logic","Ổn định"],
- desc:"Bạn kết hợp khả năng thực hành kỹ thuật, tư duy phân tích và sự ngăn nắp để vận hành, kiểm tra và tối ưu các hệ thống kỹ thuật phức tạp một cách chính xác, nhất quán.",
- strong:"Bạn cực kỳ đáng tin cậy trong việc phát hiện lỗi, đảm bảo chất lượng và duy trì hệ thống ổn định lâu dài. Giỏi lập tài liệu kỹ thuật rõ ràng và tuân thủ quy trình nghiêm túc.",
- note:"Vì đề cao sự chính xác và quy trình, bạn đôi khi gặp khó khi phải quyết định nhanh trong tình huống mơ hồ.",
+ desc:"Em kết hợp khả năng thực hành kỹ thuật, tư duy phân tích và sự ngăn nắp để vận hành, kiểm tra và tối ưu các hệ thống kỹ thuật phức tạp một cách chính xác, nhất quán.",
+ strong:[{t:"Kỹ tính và nhạy bén",d:"Em đáng tin cậy trong việc soi ra sai sót và giữ hệ thống vận hành ổn định lâu dài."},{t:"Quy trình là \"con át chủ bài\"",d:"Em lập tài liệu rõ ràng và tuân thủ quy chuẩn nghiêm túc — điều nhiều người ngại làm."},{t:"Giữ phong độ tốt",d:"Em vận hành và tối ưu những hệ thống phức tạp mà vẫn đảm bảo tính chính xác, nhất quán."}],
+ note:[{t:"Dễ bị ảnh hưởng bởi sự mơ hồ",d:"Em đề cao sự chính xác nên dễ chững lại khi tình huống thiếu dữ liệu rõ ràng."},{t:"Ngại thay đổi đột ngột",d:"Em làm tốt nhất trong môi trường ổn định nên dễ thấy bất an khi phải ứng biến lúc quy trình bị đảo lộn."}],
  careers:["Kỹ sư hệ thống","Kiểm định chất lượng QA/QC","An toàn thông tin (Cyber Security)","Kỹ thuật viên phòng thí nghiệm hiệu chuẩn","Quản lý quy trình sản xuất chuẩn","Kiểm toán","Quản lý rủi ro","Thanh tra kiểm soát chất lượng","Định phí bảo hiểm/thẩm định rủi ro (Actuary)","Quản lý môi trường","Kỹ thuật viên phòng thí nghiệm y"],
  fields:["Vận hành kỹ thuật","Kiểm soát chất lượng","Hệ thống dữ liệu"]},
 ARS:{order:"R – A – S",en:"Creative Maker",vi:"Người sáng tạo thực hành",
  kw:["Thủ công","Sáng tạo","Giàu cảm xúc"],
- desc:"Bạn dùng đôi tay khéo léo và óc sáng tạo để tạo ra sản phẩm hoặc trải nghiệm mang lại giá trị tích cực cho người khác — không chỉ đẹp, mà còn hữu ích và chạm đến cảm xúc người dùng.",
- strong:"Bạn đồng cảm sâu sắc với nhu cầu thực tế của người khác và biến sự đồng cảm đó thành sản phẩm/trải nghiệm cụ thể, dễ tiếp cận.",
- note:"Bạn có thể gặp khó khi phải thương mại hoá hoặc định giá công sức sáng tạo của mình — dễ kiệt sức nếu không thiết lập ranh giới rõ ràng.",
+ desc:"Em dùng đôi tay khéo léo và óc sáng tạo để tạo ra sản phẩm hoặc trải nghiệm mang lại giá trị tích cực cho người khác — không chỉ đẹp, mà còn hữu ích và chạm đến cảm xúc người dùng.",
+ strong:[{t:"Khả năng đồng cảm sâu sắc",d:"Em nhạy bén với nhu cầu thực tế của người khác, hiểu điều họ cần trước cả khi họ nói ra."},{t:"Hiện thực hóa ý tưởng",d:"Em không dừng ở ý tưởng mà triển khai thành sản phẩm, trải nghiệm cụ thể, dễ tiếp cận."},{t:"Chạm được cảm xúc người dùng",d:"Em làm ra thứ không chỉ đẹp và hữu ích, mà còn khiến người ta thấy được thấu hiểu."}],
+ note:[{t:"Cần tự tin vào giá trị bản thân hơn",d:"Em gặp khó khăn định giá thứ mình làm ra, dễ đánh giá thấp công sức của chính mình."},{t:"Cần thiết lập ranh giới rõ ràng",d:"Em dễ kiệt sức khi dồn hết mình cho người khác mà quên giữ giới hạn cho bản thân."}],
  careers:["Nhà thiết kế nội thất","Giáo viên mầm non","Giáo viên giáo dục đặc biệt","Giáo viên mỹ thuật, âm nhạc","Nhà trị liệu bằng nghệ thuật (Art Therapist)","Tư vấn học đường","Nhà thiết kế đồ chơi giáo dục, sản phẩm hỗ trợ người khuyết tật","Thiết kế trải nghiệm khách hàng","Diễn viên","Biên đạo múa","Ca sỹ","Đạo diễn phim ảnh"],
  fields:["Xưởng thiết kế","Studio kiến trúc","Môi trường giáo dục sáng tạo"]},
 AER:{order:"R – A – E",en:"Creative Entrepreneur",vi:"Doanh nhân sáng tạo",
  kw:["Thẩm mỹ","Chủ động","Tham vọng"],
- desc:"Bạn biến những ý tưởng sáng tạo thành sản phẩm hoặc dự án kinh doanh thực tế, vừa có gu thẩm mỹ vừa có bản lĩnh dẫn dắt để đưa sản phẩm đó đến với thị trường.",
- strong:"Bạn hiện thực hoá ý tưởng sáng tạo thành sản phẩm hữu hình rồi tự tin giới thiệu, bán hoặc gây quỹ cho nó. Kiểu người \"vừa làm vừa bán\" hiệu quả.",
- note:"Bạn dễ ôm đồm quá nhiều việc một mình, hoặc gặp khó khi phải giao bớt quyền sáng tạo khi dự án phát triển lớn hơn.",
+ desc:"Em biến những ý tưởng sáng tạo thành sản phẩm hoặc dự án kinh doanh thực tế, vừa có gu thẩm mỹ vừa có bản lĩnh dẫn dắt để đưa sản phẩm đó đến với thị trường.",
+ strong:[{t:"Hiện thực hoá ý tưởng",d:"Em biến ý tưởng sáng tạo thành sản phẩm hữu hình chứ không để nó nằm trên giấy."},{t:"Tự tin và khí chất",d:"Em tự tin và lý lẽ khi chia sẻ, thuyết phục mọi người thử trải nghiệm những gì em có ấn tượng tốt."},{t:"Nhà tiên phong",d:"Em không ngồi chờ cơ hội mà tự tìm cách đưa sản phẩm của mình đến với thị trường."}],
+ note:[{t:"“Ôm” việc",d:"Em có xu hướng tự làm hết một mình thay vì chia việc cho người khác."},{t:"Khó buông quyền sáng tạo",d:"Em gặp khó khi phải giao bớt phần sáng tạo cho người khác lúc dự án lớn dần."}],
  careers:["Quan hệ công chúng (PR)","Kinh doanh thủ công mỹ nghệ hoặc thời trang, trang sức","Tư vấn & định hướng nghệ thuật (Art Direct)","Xuất bản nghệ thuật, âm nhạc, phim ảnh (Art/Music/Film Publisher)","Sản xuất nghệ thuật, âm nhạc, phim ảnh (Art/Music/Film Producer)","Thiết kế-chế tác","Giám tuyển triển lãm nghệ thuật","Kinh doanh nghệ thuật","Sản xuất nội dung sáng tạo (Content Creator)","Phát triển sản phẩm","Thiết kế sản phẩm"],
  fields:["Doanh nghiệp thời trang/lifestyle","Startup truyền thông","Sản xuất sáng tạo (Production house/Studio)"]},
 ACR:{order:"R – A – C",en:"Design Organizer",vi:"Nhà tổ chức sáng tạo",
  kw:["Có gu thẩm mỹ","Ngăn nắp","Thực tế"],
- desc:"Bạn làm ra những sản phẩm vừa đẹp mắt vừa chính xác đến từng chi tiết, kết hợp kỹ năng thực hành, óc thẩm mỹ và tính kỷ luật cao trong quy trình.",
- strong:"Sự kiên nhẫn và độ chính xác hiếm có khi thực hiện công việc đòi hỏi cả tay nghề lẫn gu thẩm mỹ — sản phẩm làm ra vừa bền, vừa đẹp, vừa đúng chuẩn kỹ thuật.",
- note:"Bạn có thể mất nhiều thời gian hơn người khác vì luôn muốn vừa đẹp vừa hoàn hảo, đôi khi gây áp lực deadline.",
+ desc:"Em làm ra những sản phẩm vừa đẹp mắt vừa chính xác đến từng chi tiết, kết hợp kỹ năng thực hành, óc thẩm mỹ và tính kỷ luật cao trong quy trình.",
+ strong:[{t:"Tính kiên nhẫn hiếm có",d:"Em theo đuổi công việc đòi hỏi cả tay nghề lẫn gu thẩm mỹ mà không bỏ cuộc giữa chừng."},{t:"Vừa đẹp vừa đúng chuẩn",d:"Sản phẩm em làm ra bền, đẹp và chuẩn kỹ thuật cùng một lúc."},{t:"Kỷ luật trong quy trình",d:"Em giữ mọi thứ ngăn nắp, làm đến đâu chắc đến đó, không bỏ sót chi tiết nào."}],
+ note:[{t:"Cầu toàn ảnh hưởng tiến độ",d:"Em muốn vừa đẹp vừa hoàn hảo nên đôi khi mất nhiều thời gian hơn deadline cho phép."},{t:"Khó dừng lại đúng lúc",d:"Em luôn thấy còn chỗ chưa hoàn hảo nên khó chấp nhận rằng sản phẩm đã đủ tốt."}],
  careers:["Thiết kế bối cảnh/trang phục (Set/Constume Designer)","Thiết kế nội thất","Xuất bản tạp chí/nghệ thuật/âm nhạc (Publisher)","Kỹ sư âm thanh (Audio Engineer)","Kỹ sư & thiết kế hiệu ứng (VFX)","Biên tập","Soạn nhạc","Kỹ thuật thời trang (Pattern Maker)","Thiết kế đồ họa (Graphic Design)","Thiết kế giao diện người dùng UX/UI","Nghệ sỹ minh họa & hoạt hình (Illustrator & Animator)","Nghệ sỹ nghệ thuật trình diễn","Đầu bếp"],
  fields:["Công ty dịch vụ quảng cáo","vận hành thiết kế","xuất bản (Creative Agency)","Studio phim ảnh & hoạt hình (Film & Animation Studio)"]},
 ERS:{order:"R – S – E",en:"Action-Oriented Leader",vi:"Nhà lãnh đạo hành động",
  kw:["Năng động","Thích dẫn dắt","Hướng con người"],
- desc:"Bạn đứng ra tổ chức và dẫn dắt các hoạt động thực tế, hướng tới lợi ích của người khác — vừa hành động nhanh, vừa truyền cảm hứng để người khác cùng hành động.",
- strong:"Bạn huy động, tổ chức nhóm người hành động thực tế trong tình huống cần phản ứng nhanh. Người \"làm gương\" — vừa chỉ đạo vừa trực tiếp xắn tay vào làm cùng mọi người.",
- note:"Tốc độ và sự quyết đoán đôi khi khiến bạn bỏ qua việc lắng nghe ý kiến trái chiều, hoặc ra quyết định trước khi có đủ thông tin.",
+ desc:"Em đứng ra tổ chức và dẫn dắt các hoạt động thực tế, hướng tới lợi ích của người khác — vừa hành động nhanh, vừa truyền cảm hứng để người khác cùng hành động.",
+ strong:[{t:"Dẫn dắt bằng hành động",d:"Em vừa chỉ đạo vừa trực tiếp xắn tay làm cùng mọi người, nên nói là người khác nghe."},{t:"Khả năng ứng biến tốt",d:"Em huy động và tổ chức nhóm hành động hiệu quả trong những tình huống gấp."},{t:"Truyền cảm hứng cho tập thể",d:"Em khiến người khác muốn bắt tay vào làm cùng, chứ không chỉ nghe theo mệnh lệnh."}],
+ note:[{t:"Dễ bỏ qua ý kiến trái chiều",d:"Sự quyết đoán đôi khi khiến em ra quyết định trước khi lắng nghe đủ hoặc có đủ thông tin."},{t:"Yêu cầu cao",d:"Em hành động nhanh nên đôi khi em yêu cầu điều tương tự từ những người xung quanh."}],
  careers:["Bán hàng mảng kỹ thuật","Quản lý ngành hàng bán lẻ (Retail Management)","Quản lý nhân sự (HR)","Lương bổng và phúc lợi nhân sự (Compensation & Benefit)","Quản lý hành chính","Chuyên viên y tế chăm sóc cá nhân (Personal Care Aid)","Trợ lý chăm sóc y tế tại nhà (Home Health Aid)","Kỹ thuật viên thiết bị y tế, thiết bị hỗ trợ sức khỏe","Bác sỹ y học lao động (Occupational Physician)","Vật lý trị liệu & phục hồi chức năng","Quản lý sự kiện"],
  fields:["Đội ngũ kinh doanh ở các ngành","Dịch vụ khách sạn","Quản lý vận hành","Trợ lý y tế cá nhân"]},
 CRS:{order:"R – S – C",en:"Service Coordinator",vi:"Điều phối viên dịch vụ",
  kw:["Hỗ trợ","Trách nhiệm","Thực tế"],
- desc:"Bạn chăm sóc, hỗ trợ người khác bằng những hành động thực tế, cụ thể, được thực hiện theo quy trình bài bản — người luôn \"có mặt đúng lúc, làm đúng việc\".",
- strong:"Bạn vừa tận tâm với con người, vừa tỉ mỉ với quy trình — đáng tin cậy nhất trong công việc cần độ chính xác cao nhưng vẫn giữ được sự ấm áp.",
- note:"Bạn có thể gặp khó khi môi trường làm việc thay đổi liên tục hoặc thiếu quy trình rõ ràng.",
+ desc:"Em chăm sóc, hỗ trợ người khác bằng những hành động thực tế, cụ thể, được thực hiện theo quy trình bài bản — người luôn \"có mặt đúng lúc, làm đúng việc\".",
+ strong:[{t:"Tận tâm với con người",d:"Em giữ được sự ấm áp ngay cả trong công việc đòi hỏi độ chính xác cao."},{t:"Tỉ mỉ với quy trình",d:"Em là người đáng tin cậy nhất khi công việc cần làm đúng từng bước."},{t:"Có mặt đúng lúc",d:"Em là người mà mọi người tìm đến khi cần một chỗ dựa đáng tin, làm đúng việc vào đúng thời điểm."}],
+ note:[{t:"Ứng biến còn hạn chế",d:"Em gặp khó khi môi trường thay đổi liên tục hoặc không có hướng dẫn rõ ràng."},{t:"Ngại từ chối",d:"Em tận tâm với người khác nên dễ nhận thêm việc vượt quá sức mình."}],
  careers:["Vận hành sự kiện/chương trình thể thao","Quản lý thi công","Chăm sóc trải nghiệm khách hàng","Trợ lý giám đốc (Executive Assistant)","Quản lý vận hành (Operating Officer)","Thư ký luật sư","Điều dưỡng viên","An toàn lao động","Nhân viên hậu cần y tế","Nhân viên cấp cứu y tế (EMT)","Quản lý hồ sơ bệnh án"],
  fields:["Bộ phận Điều phối và vận hành tại doanh nghiệp"]},
 CER:{order:"R – E – C",en:"Operations Manager",vi:"Nhà quản lý vận hành",
  kw:["Kỷ luật","Quản trị","Hiệu suất"],
- desc:"Bạn điều hành công việc thực địa một cách hiệu quả, bài bản — kết hợp khả năng hành động thực tế, tư duy quản lý và tính kỷ luật để đảm bảo công việc vận hành trơn tru.",
- strong:"Bạn quản lý nguồn lực, con người và quy trình cùng lúc. Ra quyết định nhanh, dứt khoát nhưng vẫn đảm bảo đi đúng quy trình.",
- note:"Bạn có xu hướng tập trung quá nhiều vào hiệu suất, đôi khi bỏ qua cảm xúc hoặc khó khăn cá nhân của nhân viên.",
+ desc:"Em điều hành công việc thực địa một cách hiệu quả, bài bản — kết hợp khả năng hành động thực tế, tư duy quản lý và tính kỷ luật để đảm bảo công việc vận hành trơn tru.",
+ strong:[{t:"Quản lý nhiều thứ cùng lúc",d:"Em điều phối nguồn lực, con người và quy trình song song mà không bị rối."},{t:"Quyết đoán & chuẩn xác",d:"Em dứt khoát nhưng vẫn đảm bảo mọi thứ đi đúng hệ thống."},{t:"Con mắt vận hành tinh tường",d:"Em phát hiện điểm nghẽn và xử lý sớm, trước khi nó kịp thành vấn đề lớn."}],
+ note:[{t:"Áp lực hiệu suất",d:"Em dễ bỏ qua cảm xúc hoặc khó khăn cá nhân của những người trong đội khi giới hạn về thời gian."},{t:"Ít linh hoạt với ngoại lệ",d:"Em đề cao kỷ luật và quy trình nên đôi khi cứng nhắc trước những trường hợp đặc biệt."}],
  careers:["Quản lý sản xuất","Giám sát công trình","Quản lý chuỗi cung ứng","Tư vấn tài chính","Kế toán","Ngân hàng đầu tư","Phân tích ngân sách","Quản lý rủi ro","Kiểm toán","Pháp lý doanh nghiệp","Quản lý vận hành (Operating Officer)","Quản lý chuỗi cung ứng"],
  fields:["Bộ phận Quản lý và vận hành trong các ngành Logistics","Vận hành bán lẻ","sản xuất","Xây dựng"]},
 AIS:{order:"I – A – S",en:"Insightful Creator",vi:"Nhà sáng tạo thấu hiểu",
  kw:["Quan sát sâu sắc","Sáng tạo","Đồng cảm","Độc lập"],
- desc:"Bạn dùng tư duy phân tích sâu sắc kết hợp sự nhạy cảm sáng tạo để thấu hiểu và hỗ trợ người khác theo những cách giàu chiều sâu, vượt ra ngoài giải pháp thông thường.",
- strong:"Bạn nhìn nhận vấn đề con người từ nhiều góc độ — vừa logic vừa cảm xúc — đưa ra những góc nhìn mới mẻ, nhân văn mà người khác có thể bỏ sót.",
- note:"Bạn đôi khi suy nghĩ quá nhiều trước khi hành động, hoặc gặp khó khi phải đơn giản hoá những hiểu biết sâu sắc thành giải pháp thực tế.",
+ desc:"Em dùng tư duy phân tích sâu sắc kết hợp sự nhạy cảm sáng tạo để thấu hiểu và hỗ trợ người khác theo những cách giàu chiều sâu, vượt ra ngoài giải pháp thông thường.",
+ strong:[{t:"Tiếp cận vấn đề đa chiều",d:"Em kết hợp cả logic và cảm xúc khi nhìn nhận những vấn đề liên quan tới con người."},{t:"Góc nhìn nhân văn, mới mẻ",d:"Em thường thấy được điều người khác bỏ sót và diễn đạt nó theo cách chạm tới người nghe."},{t:"Khả năng quan sát tinh tế",d:"Em nhận ra những chi tiết nhỏ mà người khác lướt qua, và hiểu chúng nói lên điều gì."}],
+ note:[{t:"Suy nghĩ nhiều hơn hành động",d:"Em dễ cân nhắc quá lâu trước khi thật sự bắt tay vào làm."},{t:"Khó khăn trong việc đơn giản hoá",d:"Em gặp khó khi phải rút gọn những hiểu biết sâu thành giải pháp thực tế, dễ áp dụng."}],
  careers:["Tâm lý học lâm sàng (Clinical Psychology)","Nhà báo điều tra mảng xã hội-nhân văn","Nhà nghiên cứu nhân học-văn hoá","Biên kịch phim tài liệu xã hội","Nhà nghiên cứu về tâm lý con người","Thiết kế giáo dục cảm xúc-xã hội","Nhà nghiên cứu chính sách giáo dục","Nghiên cứu trải nghiệm người dùng mảng xã hội","Tư vấn sức khỏe tin thần (Mental Health Counselor)","Nhà khảo cổ học","Nhà văn","Kiến trúc sư","Thiết kế nội thất"],
  fields:["Tâm lý học","Giáo dục","Nghiên cứu trải nghiệm người dùng","Kiến trúc","Nghiên cứu văn hóa","giáo dục"]},
 AEI:{order:"I – A – E",en:"Visionary Innovator",vi:"Nhà đổi mới tiên phong",
  kw:["Ý tưởng lớn","Chiến lược","Sáng tạo"],
- desc:"Bạn tạo ra những ý tưởng mới mẻ dựa trên phân tích sâu sắc, rồi tự tin biến chúng thành chiến lược hoặc mô hình kinh doanh có tính đột phá.",
- strong:"Bạn nhìn xa hơn xu hướng hiện tại, kết hợp dữ liệu với trực giác sáng tạo để đề xuất hướng đi mới và đủ bản lĩnh thuyết phục người khác tin theo.",
- note:"Bạn có thể gặp khó khi phải thực thi chi tiết, vì thường hứng thú với giai đoạn \"nghĩ ra cái mới\" hơn giai đoạn vận hành ổn định.",
+ desc:"Em tạo ra những ý tưởng mới mẻ dựa trên phân tích sâu sắc, rồi tự tin biến chúng thành chiến lược hoặc mô hình kinh doanh có tính đột phá.",
+ strong:[{t:"Dẫn đầu xu hướng",d:"Em thấy được hướng đi mới trước khi nó kịp trở thành trào lưu."},{t:"Kết hợp tài tình dữ liệu & trực giác",d:"Em vừa dựa trên số liệu vừa tin vào linh cảm sáng tạo, và đủ bản lĩnh thuyết phục người khác đi theo."},{t:"Biến ý tưởng thành chiến lược",d:"Em không chỉ nghĩ ra cái mới mà còn dựng được lộ trình để biến nó thành hiện thực."}],
+ note:[{t:"Thiếu kiên nhẫn với chi tiết",d:"Em hứng thú với việc \"nghĩ ra cái mới\" hơn là vận hành nó ổn định về sau."},{t:"Dễ chán khi việc thành nếp",d:"Em hào hứng lúc khởi tạo nhưng nhanh mất động lực khi công việc trở nên lặp lại."}],
  careers:["Chiến lược gia sản phẩm sáng tạo (Creative Strategy)","Nghiên cứu thị trường (Research Marketer)","Thiết kế trải nghiệm thương hiệu","Nhà tư vấn chiến lược nội dung số (Content Planner)","Phát triển sản phẩm (Product Developer)","Phát triển kinh doanh mảng nghệ thuật/phim ảnh","Branding & marketing","Xuất bản nghệ thuật, âm nhạc, phim ảnh (Art/Music/Film Publisher)","Truyền thông (Media)"],
  fields:["Nghiên cứu thị trường (Research Agency)","Quảng cáo (Advertising Agency)","Phòng Marketing tại nhãn hàng tiêu dùng","Ngành giải trí"]},
 ACI:{order:"I – A – C",en:"Analytical Designer",vi:"Nhà thiết kế phân tích",
  kw:["Tỉ mỉ","Logic","Sáng tạo có cấu trúc"],
- desc:"Bạn nghiên cứu sâu một vấn đề rồi trình bày kết quả một cách có hệ thống và thẩm mỹ — cầu nối giữa dữ liệu phức tạp và cách truyền đạt dễ hiểu, hấp dẫn.",
- strong:"Bạn tổ chức lượng thông tin lớn thành cấu trúc rõ ràng, đồng thời trình bày trực quan, dễ tiếp cận. Vừa chính xác về nội dung vừa chỉn chu về hình thức.",
- note:"Bạn có thể dành quá nhiều thời gian hoàn thiện cách trình bày, đôi khi làm chậm tiến độ so với deadline thực tế.",
+ desc:"Em nghiên cứu sâu một vấn đề rồi trình bày kết quả một cách có hệ thống và thẩm mỹ — cầu nối giữa dữ liệu phức tạp và cách truyền đạt dễ hiểu, hấp dẫn.",
+ strong:[{t:"Tổ chức thông tin rõ ràng",d:"Em sắp xếp lượng dữ liệu lớn thành cấu trúc mạch lạc, dễ nắm bắt."},{t:"Trình bày chỉn chu",d:"Em đề cao việc trình bày vừa chính xác về nội dung vừa đẹp về hình thức."},{t:"Cầu nối giữa dữ liệu và người đọc",d:"Em khiến những con số khô khan trở nên dễ hiểu và hấp dẫn với người xem."}],
+ note:[{t:"Cầu toàn",d:"Em dễ dành quá nhiều thời gian hoàn thiện cách trình bày, làm chậm tiến độ chung."},{t:"Sa đà vào chi tiết nhỏ",d:"Em tỉ mỉ đến mức đôi khi mất tầm nhìn tổng thể của cả dự án."}],
  careers:["Thiết kế UX/UI","Quay dựng truyền thông","Truyền thông doanh nghiệp","Thiết kế đa phương tiện","Nghiên cứu thị trường mảng sáng tạo","Chiến lược sản phẩm sáng tạo (Creative Strategy)","Nghiên cứu thị trường (Research Marketer)","thiết kế trải nghiệm thương hiệu","Tư vấn chiến lược nội dung số (Content Planner)","Phát triển sản phẩm (Product Developer)","Biên tập viên mảng nghệ thuật/văn hóa"],
  fields:["Bộ phần truyền thông","thiết kế tại doanh nghiệp hoặc công ty dịch vụ quảng cáo (Advetising agency)"]},
 EIS:{order:"I – S – E",en:"Strategic Advisor",vi:"Nhà tư vấn chiến lược",
  kw:["Phân tích","Giao tiếp","Ảnh hưởng"],
- desc:"Bạn dùng kiến thức chuyên sâu để dẫn dắt và tạo ra thay đổi tích cực — vừa là người nghiên cứu, vừa là người đứng ra hành động và thuyết phục người khác cùng tham gia.",
- strong:"Bạn kết hợp hiểu biết chuyên môn với kỹ năng lãnh đạo để biến kiến thức thành hành động có ảnh hưởng xã hội. Thường được tin tưởng vì vừa có chuyên môn vừa có tâm.",
- note:"Bạn có thể bị quá tải vì ôm đồm nhiều vai trò cùng lúc, dễ kiệt sức nếu không phân bổ rõ trách nhiệm.",
+ desc:"Em dùng kiến thức chuyên sâu để dẫn dắt và tạo ra thay đổi tích cực — vừa là người nghiên cứu, vừa là người đứng ra hành động và thuyết phục người khác cùng tham gia.",
+ strong:[{t:"Biến kiến thức thành hành động",d:"Em kết hợp chuyên môn với khả năng lãnh đạo để tạo ra ảnh hưởng thật sự."},{t:"Có tâm trong việc mình làm",d:"Em vừa giỏi chuyên môn vừa thật lòng vì người khác, nên lời em nói có trọng lượng."},{t:"Thuyết phục người khác cùng đi",d:"Em không chỉ đưa ra lời khuyên mà còn truyền cảm hứng người khác bắt tay tham gia cùng em."}],
+ note:[{t:"Ôm đồm nhiều vai trò",d:"Em dễ quá tải và kiệt sức nếu không phân bổ rõ trách nhiệm cho người khác."},{t:"Khó nói lời từ chối",d:"Em muốn tạo ảnh hưởng ở nhiều nơi nên dễ nhận thêm việc vượt quá sức mình."}],
  careers:["Chính sách công","Quản trị y tế","Quản lý trường học/mảng giáo dục","Tư vấn phát triển cộng đồng","Chuyên viên hoạch định chính sách","Nhà vận động chính sách xã hội","Quản lý nhân sự (HR)","Phát triển và phúc lợi nhân sự","Nhà vận động chính sách xã hội","Phát triển chương trình đào tạo (Learning & Development)","Thiết kế chương trình học","Lương bổng và phúc lợi nhân sự (Compensation & Benefit)"],
  fields:["Nhân sự","Giáo dục","Y tế","Hoạch định chiến lược","Xây dựng chính sách","Hành chính công"]},
 CIS:{order:"I – S – C",en:"Knowledge Facilitator",vi:"Người điều phối tri thức",
  kw:["Phân tích","Hướng dẫn","Tổ chức"],
- desc:"Bạn nghiên cứu và hệ thống hoá thông tin nhằm phục vụ con người tốt hơn — vừa giỏi phân tích, vừa quan tâm tác động thực tế lên đời sống người khác.",
- strong:"Bạn biến dữ liệu phức tạp thành thông tin hữu ích, dễ áp dụng. Làm việc cẩn trọng, có trách nhiệm và đáng tin cậy.",
- note:"Bạn có thể quá thận trọng khi đưa ra quyết định, muốn có đầy đủ dữ liệu trước khi hành động — đôi khi bỏ lỡ cơ hội cần phản ứng nhanh.",
+ desc:"Em nghiên cứu và hệ thống hoá thông tin nhằm phục vụ con người tốt hơn — vừa giỏi phân tích, vừa quan tâm tác động thực tế lên đời sống người khác.",
+ strong:[{t:"Tận dụng tốt các dữ liệu",d:"Em chuyển thông tin phức tạp thành kiến thức hữu ích, dễ áp dụng và thực thi."},{t:"Cẩn trọng và có trách nhiệm",d:"Em làm việc kỹ lưỡng nên người khác luôn yên tâm khi giao việc cho em."},{t:"Đặt con người làm trọng tâm",d:"Em xử lý thông tin không phải để cho đẹp, mà để nó thật sự giúp được ai đó."}],
+ note:[{t:"Thận trọng ảnh hưởng tốc độ",d:"Em muốn có đủ dữ liệu mới hành động, đôi khi bỏ lỡ cơ hội cần phản ứng nhanh."},{t:"Dễ lúng túng khi thiếu dữ liệu",d:"Em quen làm việc với thông tin đầy đủ nên khó phán đoán trong tình huống chưa chắc chắn."}],
  careers:["Tâm lý học lâm sàng (Clinical Psychology)","Tâm lý học đường","Cố vấn hướng nghiệp","Cố vấn tâm lý phục hồi","Chuyên viên tư vấn phục hồi chức năng","Quản lý quá trình phục hồi (Case Management in Psychology/Counseling)","Đánh giá chương trình giáo dục","Quản lý chất lượng giáo dục","Phát triển chương trình đào tạo (Learning & Development)","Thiết kế chương trình học","Chuyên viên hoạch định chính sách","Nghiên cứu thị trường lao động"],
  fields:["Viện nghiên cứu","Quản trị học thuật","chính sách công"]},
 CEI:{order:"I – E – C",en:"Business Analyst Leader",vi:"Nhà phân tích kinh doanh",
  kw:["Logic","Chiến lược","Quản trị"],
- desc:"Bạn phân tích dữ liệu và xu hướng kỹ lưỡng để đưa ra quyết định kinh doanh bài bản, có cơ sở — vừa nhìn xa vừa đi từng bước chắc chắn.",
- strong:"Bạn kết hợp tư duy phân tích sắc bén với bản năng kinh doanh và tính kỷ luật, đưa ra chiến lược vừa sáng suốt vừa khả thi.",
- note:"Bạn có thể quá phụ thuộc vào số liệu trước khi hành động, phản ứng chậm hơn trong tình huống cần quyết định nhanh.",
+ desc:"Em phân tích dữ liệu và xu hướng kỹ lưỡng để đưa ra quyết định kinh doanh bài bản, có cơ sở — vừa nhìn xa vừa đi từng bước chắc chắn.",
+ strong:[{t:"Óc phân tích sắc bén",d:"Em nhìn ra bản chất vấn đề qua số liệu, trong khi người khác chỉ thấy bề nổi."},{t:"Chiến lược khả thi & kỷ luật",d:"Em đưa ra hướng đi vừa sáng suốt vừa thực hiện được, không viển vông."},{t:"Tầm nhìn dài hạn & chắc chắn",d:"Em có tầm nhìn xa với bất kỳ dự án, công việc và luôn chia nhỏ thành từng bước có thể thực hiện được."}],
+ note:[{t:"Phụ thuộc vào số liệu",d:"Em cần dữ liệu đầy đủ mới dám hành động nên phản ứng chậm trong tình huống cần phản ứng nhanh."},{t:"Khuyến khích quan sát thực tế",d:"Em dựa nhiều vào phân tích nên đôi khi bỏ qua tín hiệu mà số liệu chưa kịp phản ánh."}],
  careers:["Kế toán doanh nghiệp","Phân tích tài chính","Tư vấn quản trị (management consultant)","Chuyên viên đầu tư chứng khoáng","Phân tích và hoạch định chiến lược doanh nghiệp","Định giá doanh nghiệp (M&A)","Quản lý rủi ro","Phân tích thị trường chứng khoán","Phân tích dữ liệu kinh doanh (Business Analytics)","Phát triển chiến lược chuỗi cung ứng","Quản lý pháp lý doanh nghiệp","Định phí bảo hiểm (Actuary)"],
  fields:["Công ty tư vấn doanh nghiệp (Consulting Firm)","Bộ phận chiến lược tại doanh nghiệp"]},
 AES:{order:"A – S – E",en:"Creative Influencer",vi:"Nhà sáng tạo tạo ảnh hưởng",
  kw:["Sáng tạo","Giao tiếp mạnh","Giàu năng lượng"],
- desc:"Bạn dùng sự sáng tạo và khả năng kết nối con người để truyền cảm hứng, dẫn dắt người khác hướng tới một mục tiêu hoặc thay đổi tích cực nào đó.",
- strong:"Bạn truyền tải ý tưởng theo cách vừa cảm xúc vừa thuyết phục, dễ dàng thu hút và tập hợp người khác cùng tham gia.",
- note:"Bạn có thể quá tập trung vào việc truyền cảm hứng mà thiếu theo dõi chi tiết thực thi, dễ khiến dự án \"đầu voi đuôi chuột\".",
+ desc:"Em dùng sự sáng tạo và khả năng kết nối con người để truyền cảm hứng, dẫn dắt người khác hướng tới một mục tiêu hoặc thay đổi tích cực nào đó.",
+ strong:[{t:"Truyền tải đầy cảm xúc",d:"Em nói ra ý tưởng theo cách khiến người nghe vừa hiểu vừa rung động."},{t:"Tập hợp người khác dễ dàng",d:"Em thu hút và kéo mọi người cùng tham gia vào điều mình tin tưởng."},{t:"Năng lượng lan toả",d:"Em mang lại sinh khí cho cả nhóm, khiến không khí làm việc trở nên hào hứng hơn."}],
+ note:[{t:"Mạnh khởi đầu, yếu theo dõi",d:"Em tập trung truyền cảm hứng nhưng dễ lơ là khâu thực thi, khiến dự án \"đầu voi đuôi chuột\"."},{t:"Ngại phần việc tỉ mỉ",d:"Em mạnh ở ý tưởng và kết nối, nhưng dễ né những đầu việc chi tiết, lặp lại."}],
  careers:["Truyền thông","Quan hệ Công chúng","Thiết kế Đa phương tiện","Thiết kế UX/UI","Quản trị Sự kiện","Quản trị Khách sạn","Tư vấn Hướng nghiệp","Đào tạo Doanh nghiệp","Biên tập Nội dung Sáng tạo (Creative Copywriting)","Chiến lược Sáng tạo Quảng cáo","Tuyển sinh & Phát triển Đối tác","Quản lý Dự án Sáng tạo","Chuyên viên Thiết kế & Quản lý Trải nghiệm Dịch vụ"],
  fields:["Agency marketing","Công ty truyền thông","Doanh nghiệp giáo dục"]},
 ACS:{order:"A – S – C",en:"Community Storyteller",vi:"Người kể chuyện cộng đồng",
  kw:["Đồng cảm","Sáng tạo","Có tổ chức"],
- desc:"Bạn truyền tải thông điệp một cách sáng tạo nhưng vẫn đảm bảo tính rõ ràng, dễ tiếp cận — giỏi \"kể chuyện\" theo cách có cấu trúc, phục vụ đúng nhu cầu người nghe.",
- strong:"Bạn cân bằng tốt giữa sáng tạo và tổ chức, giúp nội dung vừa hấp dẫn vừa dễ hiểu, dễ sử dụng.",
- note:"Bạn có thể tự giới hạn sự sáng tạo vì quá chú trọng tính rõ ràng, đôi khi bỏ lỡ cơ hội thử nghiệm cách thể hiện táo bạo hơn.",
+ desc:"Em truyền tải thông điệp một cách sáng tạo nhưng vẫn đảm bảo tính rõ ràng, dễ tiếp cận — giỏi \"kể chuyện\" theo cách có cấu trúc, phục vụ đúng nhu cầu người nghe.",
+ strong:[{t:"Cân bằng sáng tạo và tổ chức",d:"Em làm ra nội dung vừa hấp dẫn vừa mạch lạc, dễ sử dụng."},{t:"Kể chuyện dễ hiểu",d:"Em diễn đạt điều phức tạp theo cách ai nghe cũng theo được."},{t:"Hiểu người nghe cần gì",d:"Em kể chuyện dựa trên điều khán giả thật sự quan tâm, không phải điều mình muốn nói."}],
+ note:[{t:"Tự giới hạn sự táo bạo",d:"Em quá chú trọng tính rõ ràng nên đôi khi bỏ lỡ cơ hội thử cách thể hiện mới mẻ hơn."},{t:"Ngại trở nên độc đáo",d:"Em ưu tiên sự rõ ràng và an toàn nên đôi khi né những góc nhìn dễ gây tranh luận."}],
  careers:["Chuyên viên Truyền thông Nội bộ","Điều phối Dự án Giáo dục","Điều phối Sự kiện/Sân khấu","Phát triển nội dung học liệu","Điều phối Chương trình Phi lợi nhuận","Chăm sóc Khách hàng cao cấp","Quản lý chiến dịch truyền thông","Quản lý dự án marketing","Chuyên viên phát triển sản phẩm","Quản trị nhà hàng khách sản mảng cao cấp"],
- fields:["Quản trị dự án","Nhân sự","Truyền thông nội bộ hoặc giáo dục","Nhà xuất bản"]},
+ fields:["Tổ chức phi lợi nhuận","truyền thông giáo dục","xuất bản"]},
 ACE:{order:"A – E – C",en:"Brand Architect",vi:"Nhà kiến tạo thương hiệu",
  kw:["Thẩm mỹ","Chiến lược","Quản lý"],
- desc:"Bạn phát triển ý tưởng sáng tạo thành thương hiệu hoặc doanh nghiệp có hệ thống vận hành rõ ràng — vừa có gu thẩm mỹ, vừa có tư duy kinh doanh, vừa biết tổ chức để duy trì lâu dài.",
- strong:"Hiếm có người vừa sáng tạo vừa kỷ luật — bạn biến ý tưởng ban đầu thành hệ thống thương hiệu nhất quán, có thể nhân rộng và vận hành bền vững.",
- note:"Bạn đôi khi mất nhiều thời gian ra quyết định khi sáng tạo và kiểm soát quy trình mâu thuẫn nhau.",
+ desc:"Em phát triển ý tưởng sáng tạo thành thương hiệu hoặc doanh nghiệp có hệ thống vận hành rõ ràng — vừa có gu thẩm mỹ, vừa có tư duy kinh doanh, vừa biết tổ chức để duy trì lâu dài.",
+ strong:[{t:"Vừa sáng tạo vừa kỷ luật",d:"Em hiếm ở chỗ có cả hai, nên ý tưởng của em không chỉ hay mà còn triển khai được."},{t:"Xây hệ thống bền vững",d:"Em biến ý tưởng ban đầu thành thương hiệu nhất quán, nhân rộng và vận hành lâu dài được."},{t:"Tư duy dài hạn",d:"Em xây thứ để tồn tại lâu dài, không chạy theo hiệu ứng nhất thời."}],
+ note:[{t:"Mâu thuẫn nội tâm",d:"Em mất thời gian khi phần sáng tạo và phần kiểm soát quy trình kéo về hai hướng khác nhau."},{t:"Dễ ôm đồm công việc",d:"Em muốn kiểm soát cả hai đầu nên dễ quá tải khi quy mô lớn dần lên."}],
  careers:["Xây dựng thương hiệu, marketing & truyền thông","Quản lý dự án sáng tạo","Sản xuất mảng sáng tạo (Creative Producer)","Sản xuất nghệ thuật, phim ảnh, âm nhạc (Art/Film/Music Producer)","Sản xuất mảng sáng tạo (Creative Producer)","Phát triển hệ thống nhượng quyền","Quản lý sản phẩm thời trang/thiết kế","Quản lý danh mục thương hiệu","Thiết kế trải nghiệm khách hàng","Quản lý chuỗi cửa hàng concept sáng tạo","Chiến lược gia sản phẩm sáng tạo (Creative Strategy)","Quản lý thương mại điện tử","Quản lý nhà hàng khách sạn"],
  fields:["Agency chiến lược sáng tạo & quảng cáo","Ngành dịch vụ, trải nghiệm","Production house","Quản trị dự án mảng sáng tạo"]},
 CES:{order:"S – E – C",en:"People Development Leader",vi:"Nhà phát triển con người",
  kw:["Hướng ngoại","Lãnh đạo","Tổ chức"],
- desc:"Bạn dẫn dắt đội nhóm theo quy trình rõ ràng, vì lợi ích chung của tập thể — kết hợp sự quan tâm đến con người, khả năng lãnh đạo và tính kỷ luật trong quản lý.",
- strong:"Bạn xây dựng hệ thống quản lý con người công bằng, rõ ràng nhưng vẫn giữ được sự ấm áp. Kiểu lãnh đạo \"vừa có tâm vừa có tầm\".",
- note:"Bạn có thể gặp khó khi phải đưa ra quyết định cứng rắn ảnh hưởng đến con người vì mong muốn duy trì sự hài hoà.",
+ desc:"Em dẫn dắt đội nhóm theo quy trình rõ ràng, vì lợi ích chung của tập thể — kết hợp sự quan tâm đến con người, khả năng lãnh đạo và tính kỷ luật trong quản lý.",
+ strong:[{t:"Công bằng mà vẫn ấm áp",d:"Em xây hệ thống quản lý con người rõ ràng nhưng không hề lạnh lùng."},{t:"Lãnh đạo có tâm và có tầm",d:"Em phát triển người khác chứ không chỉ đơn thuần giao việc cho họ."},{t:"Dẫn dắt theo quy trình rõ ràng",d:"Em tạo ra cơ chế minh bạch để cả đội biết mình đang đi đâu và cần làm gì."}],
+ note:[{t:"Khó quyết đoán",d:"Em muốn giữ hoà khí nên khó ra quyết định ảnh hưởng tiêu cực đến ai đó, dù cần thiết."},{t:"Xu hướng tránh xung đột",d:"Em ưu tiên hoà khí nên đôi khi để vấn đề âm ỉ thay vì xử lý dứt điểm."}],
  careers:["Quản lý nhân sự","Chuyên viên lương thưởng & phúc lợi","Quản lý đào tạo & phát triển nhân tài","Chuyên viên phát triển tổ chức","Chuyên viên phát triển kinh doanh","Điều phối dự án","Chuyên viên quan hệ doanh nghiệp","Quản trị nhà hàng khách sạn/dịch vụ lưu trú","Dịch vụ khách hàng","Quản lý tuyển sinh","Tư vấn hướng nghiệp","Hỗ trợ sinh viên kết nối doanh nghiệp"],
  fields:["Nhân sự, đào tạo & phát triển","Quản lý giáo dục","Ngành dịch vụ (Hospitality/F&B)","Hỗ trợ nhân viên/sinh viên/khách hàng"]}
 };
@@ -806,6 +865,8 @@ const levelOf = p => LEVELS.find(l => p >= l.min);
 function showScreen(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   $(id).classList.add("active");
+  const sb = $("#sticky-cta");
+  if(sb) sb.classList.toggle("on", id === "#screen-result");
   window.scrollTo({top:0,behavior:"smooth"});
 }
 function toast(msg){
@@ -1103,12 +1164,41 @@ function finishQuiz(){
     '</div>'+
     '<div class="arch-kw">'+a.kw.map(k=>'<span class="kw">'+k+'</span>').join("")+'</div>'+
     '<div class="arch-block"><div class="ab-title">📌 Em là ai</div><p>'+a.desc+'</p></div>'+
-    '<div class="arch-block"><div class="ab-title">💪 Điểm mạnh</div><p>'+a.strong+'</p></div>'+
-    '<div class="arch-block"><div class="ab-title">⚠️ Cần lưu ý</div><p>'+a.note+'</p></div>'+
-    '<div class="arch-block"><div class="ab-title">💼 Ngành học & nghề nghiệp gợi ý</div>'+
-      '<div class="tags">'+a.careers.map(c=>'<span class="tag">'+c+'</span>').join("")+'</div></div>'+
+    '<div class="sn-grid">'+
+      '<div class="sn-col good"><div class="sn-title">💪 Điểm mạnh của em</div>'+
+        a.strong.map(x=>'<div class="sn-item"><span class="sn-mk">✓</span><div><div class="sn-t">'+x.t+'</div><div class="sn-d">'+x.d+'</div></div></div>').join("")+
+      '</div>'+
+      '<div class="sn-col warn"><div class="sn-title">🌱 Điều em nên lưu ý</div>'+
+        a.note.map(x=>'<div class="sn-item"><span class="sn-mk">!</span><div><div class="sn-t">'+x.t+'</div><div class="sn-d">'+x.d+'</div></div></div>').join("")+
+      '</div>'+
+    '</div>'+
+    '<div class="arch-block"><div class="ab-title">💼 Ngành học &amp; nghề nghiệp gợi ý</div>'+
+      '<div class="tags" id="career-tags">'+
+        a.careers.map((c,i)=>'<span class="tag'+(i>=6?' extra':'')+'">'+c+'</span>').join("")+
+      '</div>'+
+      (a.careers.length>6
+        ? '<button type="button" class="seemore" id="career-more">'+
+            '<span id="career-more-label">Xem thêm '+(a.careers.length-6)+' ngành nghề khác</span>'+
+            '<svg width="13" height="13" viewBox="0 0 16 16"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+          '</button>'
+        : '')+
+    '</div>'+
     '<div class="arch-block"><div class="ab-title">🏢 Môi trường phù hợp</div>'+
       '<div class="tags">'+a.fields.map(f=>'<span class="tag alt">'+f+'</span>').join("")+'</div></div>';
+
+  // toggle xem thêm ngành nghề
+  const cmBtn = $("#career-more");
+  if(cmBtn){
+    cmBtn.addEventListener("click", ()=>{
+      const ex = document.querySelectorAll("#career-tags .tag.extra");
+      const opening = !ex[0].classList.contains("show");
+      ex.forEach(e=>e.classList.toggle("show", opening));
+      cmBtn.classList.toggle("open", opening);
+      $("#career-more-label").textContent = opening
+        ? "Thu gọn danh sách"
+        : "Xem thêm "+ex.length+" ngành nghề khác";
+    });
+  }
 
   // chi tiết nhóm
   $("#groups").innerHTML = r.ranked.map((g,rank)=>{
@@ -1148,6 +1238,8 @@ function finishQuiz(){
       country: student.country, archetype: a.en+" — "+a.vi, holland: r.holland.join("")
     });
     ctaBtn.href = CONSULT_URL + (CONSULT_URL.indexOf("?")>=0 ? "&" : "?") + cp.toString();
+    const sBtn = $("#sticky-btn");
+    if(sBtn) sBtn.href = ctaBtn.href;
   } else { ctaBtn.removeAttribute("target"); ctaBtn.href = "#"; }
 
   showScreen("#screen-result");
@@ -1155,6 +1247,8 @@ function finishQuiz(){
   // Khi mở bằng link báo cáo -> chỉ hiển thị, không gửi lại Sheet, ẩn CTA
   if(isReplay){
     $("#cta-block").style.display = "none";
+    const sb = $("#sticky-cta");
+    if(sb) sb.classList.remove("on");
     return;
   }
 
